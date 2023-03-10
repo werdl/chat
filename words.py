@@ -3,10 +3,11 @@ class WordMaths:
         self.c=c
         self.ans=""
     def check(self):
-        for dfksjagjkfhgasdkjfgkasdjfg in self.c.words: # obscure char to prevent bug
+        for a in self.c.words: # obscure char to prevent bug
             try:
-                self.ans=eval(dfksjagjkfhgasdkjfgkasdjfg)
-                self.expr=dfksjagjkfhgasdkjfgkasdjfg
+                if a!="a":
+                    self.ans=eval(a)
+                    self.expr=a
                 break
             except:
                 pass
@@ -14,6 +15,3 @@ class WordMaths:
             return True
     def maths(self):
         return [self.expr,self.ans]
-import re,string
-
-input = " why 1 +2"

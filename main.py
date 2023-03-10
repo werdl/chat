@@ -55,7 +55,8 @@ def user(inp,how_just=False):
             alpa=str(alpa).replace(str(y),"")
         for x in alpa:
             c=c.replace(x,"")
-        robot=str(c)+"="+str(eval(str(c)))
+        try: robot=str(c)+"="+str(eval(str(c))) 
+        except: pass
     elif cwords.check()==True:
         robot=cwords.maths()[0]+"="+str(cwords.maths()[1])
     else:
@@ -63,7 +64,7 @@ def user(inp,how_just=False):
         if [q for q in qs if(q in c)]: # check if q is question
             if "-d" in sys.argv:
                 print(c) # check for debug
-            arg=scrape.Search(c)
+            arg=scrape.Search(str(c))
             arg.search()
             z=arg.first
             z=z.replace("\\xa0","").replace("...","")

@@ -1,0 +1,74 @@
+==NOTES==
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~Parts of this I wrote:~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+    main.py
+    words.py
+    scrape.py (part)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+~~Parts I didn't write:~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+    scrape.py (part)
+~~~~~~~~~~~~~~~~~~~~~
+~~Libraries I used:~~
+~~~~~~~~~~~~~~~~~~~~~
+    bs4 & lxml: HTML parsing
+    textblob: Sentiment analysis and spell checking
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~Places I took code from:~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    https://stackoverflow.com/questions/38649496/python-determine-if-a-string-contains-math
+    https://stackoverflow.com/questions/74869449/how-to-scrape-the-url-title-and-description-of-google-search-results
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~Explanation of the code~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==MAIN.PY==
+    Lines 1-2: import required Libraries
+        sys - sys.argv (cmd line args (-d for debugging info))
+        random - random.choice (random from list)
+        re - re.compile (regex)
+    Lines 3-24: define sentiment analysis function
+        4-6 - decide whether or not to take input
+        6-9 - get spell-checking info
+        10-18 - analyse text
+        19-24 - cleanup and return
+    Lines 25-74: define main chatbot function
+        26-29 - spell check and word list
+        30-33 - handle greetings
+        34-35 - other common case handling
+        36-49 - how are you handling
+            36-40 - respond pseudo-randomly
+            41-49 - determine sentiment of user response and reply adequately
+        50-58 - regex for maths equations
+            50-51 - jumbo catch-all regex
+            52-55 - compile list of non-numeric chars
+            56-57 - strip whitespace
+            58-59 - evaluate, cleanup and return
+        62-74 - googling
+            63-64 - determine if question
+            67-72 - scrape data and return
+            73-74 - handle if not question
+        75 - return as list (how_just for how are you query)
+    Lines 87-96: define chat wrapper
+        89-96 - evaluate input, and send to main function
+    Line 97: Enter chatbot
+==SCRAPE.PY==
+    Lines 7-8: imports
+        bs4 and lxml - HTML parsing
+        requests - grab content of page
+    Lines 11-55: define wrapper class
+        13-17 - define basics
+        19-29 - arrange headers and parameters
+        30-35 - grab data and parse
+        36-49 - iterate through tags
+            37 - get title
+            38-43 - get snippet and links
+            44-49 - add to nested dictionary
+        50-55 - reformat data and return
+==WORDS.PY==
+    Lines 1-16: define main class
+        2-4 -  define basics
+        8-11 - Iterate through and check for maths
+        12-14 - error handling and cleanup
+        16-17 - wrapper for value return
+
