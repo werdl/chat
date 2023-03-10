@@ -1,5 +1,5 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape,words
+import sys,random,re,scrape,words,string
 def sentiment(inp,take=False): # Take input 
     if take==True:
         inp=str(input("😃 -- "))
@@ -50,6 +50,15 @@ def user():
         else:
             neut=["Nice","*dramatic moment*","It could go either way","Good"]
             robot=random.choice(neut)
+    elif re.match(r"[\w\s]*[\d\+\-\*\/]+[\w\s]*", str(c)):
+        # regex from https://stackoverflow.com/questions/38649496/python-determine-if-a-string-contains-math
+        alpa=list(string.printable)
+        n=string.digits+"/"+"-"+"+"+"*"
+        for y in n:
+            alpa=str(alpa).replace(str(y),"")
+        for x in alpa:
+            c=c.replace(x,"")
+        robot=str(c)+"="+str(eval(str(c)))
     elif cwords.check()==True:
         robot=cwords.maths()[0]+"="+str(cwords.maths()[1])
     else:
