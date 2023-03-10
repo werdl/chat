@@ -27,6 +27,7 @@ def user():
     inp=inp.lower()
     b=t(inp)
     c=b.correct().replace("'","")
+    cwords=words.WordMaths(c)
     greetings=["hello","hi","morning","hullo","sup","whats good"]
     if [ele for ele in greetings if(ele in c)]: # check if any of greetings in c
         robot=random.choice(greetings) # greet user
@@ -49,7 +50,8 @@ def user():
         else:
             neut=["Nice","*dramatic moment*","It could go either way","Good"]
             robot=random.choice(neut)
-    elif words.maths()
+    elif cwords.check()==True:
+        robot=cwords.maths()[0]+"="+str(cwords.maths()[1])
     else:
         qs=['how','what','who','when','where','why','?','is there']
         if [q for q in qs if(q in c)]: # check if q is question
