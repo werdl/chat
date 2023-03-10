@@ -22,7 +22,7 @@ def sentiment(inp,take=False): # Take input
     except:
         pass
     return robot
-def user(inp,how_just):
+def user(inp,how_just=False):
     inp=inp.lower()
     b=t(inp)
     c=b.correct().replace("'","")
@@ -81,14 +81,16 @@ Type 'sentiment' to perform sentiment analysis.
 If it doesn't recognise your input, it will return the top Google search response if it is a question
 Or else say some ambiguous phrases
 
-Also please bear in bind the search is unreliable at best (dodgy dependancy)
+It can also evaluate maths problems
 """)
-nexthow=False
-while True:
-    inp=str(input("😃 -- "))
-    take=user(inp,nexthow)
-    if take[1]==True:
-      nexthow=True
-    else:
-      nexthow=False
-    print(take[0])
+def chat():
+    nexthow=False
+    while True:
+        inp=str(input("😃 -- "))
+        take=user(inp,nexthow)
+        if take[1]==True:
+            nexthow=True
+        else:
+            nexthow=False
+        print(take[0])
+chat()
