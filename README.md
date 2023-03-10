@@ -4,11 +4,12 @@
 - Python
 - requirements.txt
 ```bash
-git clone https://github.com/werdl/chat.git
+pip install werdl-chat
 ```
-```bash
-pip install -r reqiurements.txt
+### Get chatting
+- New file
+```python
+from werdl-chat import *
+chat()
 ```
-```bash
-python3 main.py
-```
+
