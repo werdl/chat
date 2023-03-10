@@ -22,13 +22,13 @@ def sentiment(inp,take=False): # Take input
     except:
         pass
     return robot
-def user():
-    inp=str(input("😃 -- "))
+def user(inp,how_just):
     inp=inp.lower()
     b=t(inp)
     c=b.correct().replace("'","")
     cwords=words.WordMaths(c)
     greetings=["hello","hi","morning","hullo","sup","whats good"]
+    
     if [ele for ele in greetings if(ele in c)]: # check if any of greetings in c
         robot=random.choice(greetings) # greet user
     elif "sentiment" in c:
@@ -36,11 +36,8 @@ def user():
     elif "how are you" in c:
         choices=["Great","Awful","Fabulous","All the better seeing you"]
         robot=random.choice(choices)+", how about you?"
-        print(f"🤖 -- {robot}")
-        inp=str(input("😃 -- "))
-        inp=inp.lower()
-        b=t(inp)
-        c=b.correct()
+        how_just=True
+    elif how_just==True:
         if c.sentiment.polarity>0.3:
             good=["Aww,fab!","That's great!","Cool","Love to hear it"]
             robot=random.choice(good)
@@ -74,7 +71,7 @@ def user():
             robot=z.split(".")[0].strip()+"."
         else:
             robot=sentiment(inp)
-    print(f"🤖 -- {robot.strip()}")
+    return [f"🤖 -- {robot.strip()}",how_just]
 print("""
 Welcome to my conversational chatbot! Ask it some questions.
 Note: It is not designed to operate like GPT-3, rather to talk with you.
@@ -86,5 +83,12 @@ Or else say some ambiguous phrases
 
 Also please bear in bind the search is unreliable at best (dodgy dependancy)
 """)
+nexthow=False
 while True:
-    user()
+    inp=str(input("😃 -- "))
+    take=user(inp,nexthow)
+    if take[1]==True:
+      nexthow=True
+    else:
+      nexthow=False
+    print(take[0])
