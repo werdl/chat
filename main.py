@@ -1,6 +1,6 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape
-def sentiment(inp,take=False):
+import sys,random,re,scrape,words
+def sentiment(inp,take=False): # Take input 
     if take==True:
         inp=str(input("😃 -- "))
     inp=inp.lower()
@@ -29,7 +29,7 @@ def user():
     c=b.correct().replace("'","")
     greetings=["hello","hi","morning","hullo","sup","whats good"]
     if [ele for ele in greetings if(ele in c)]: # check if any of greetings in c
-        robot=random.choice(greetings)
+        robot=random.choice(greetings) # greet user
     elif "sentiment" in c:
         robot=sentiment(inp,True)
     elif "how are you" in c:
@@ -49,16 +49,15 @@ def user():
         else:
             neut=["Nice","*dramatic moment*","It could go either way","Good"]
             robot=random.choice(neut)
+    elif words.maths()
     else:
         qs=['how','what','who','when','where','why','?','is there']
-        if [q for q in qs if(q in c)]:
-            c =re.sub("[^A-Z]", "", str(c),0,re.IGNORECASE)
+        if [q for q in qs if(q in c)]: # check if q is question
             if "-d" in sys.argv:
-                print(c)
+                print(c) # check for debug
             arg=scrape.Search(c)
             arg.search()
             z=arg.first
-            #json processing needed, check documentation
             z=z.replace("\\xa0","").replace("...","")
             z=z.replace("?",".").replace("!",".")
             robot=z.split(".")[0].strip()+"."

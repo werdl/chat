@@ -2,9 +2,8 @@
 I found this code at the following location
 https://stackoverflow.com/questions/74869449/how-to-scrape-the-url-title-and-description-of-google-search-results
 
-Whereas it uses some of the parsing code, I have also added error checking, OOP and some pre-processing for later on
+Whereas it uses some of the parsing code, I have also added error checking and some pre-processing for later on
 """
-
 from bs4 import BeautifulSoup
 import requests, lxml # lxml for parsing bs4 arg
 class Search():
@@ -25,7 +24,7 @@ class Search():
         }
         data = []     
         html = requests.get("https://www.google.com/search", params=params, headers=headers, timeout=30) # grab data
-        soup = BeautifulSoup(html.text, 'lxml')  # parse data
+        soup = BeautifulSoup(html.text, 'lxml') # parse data
         for result in soup.select(".tF2Cxc"): # search through for useful info
             title = result.select_one(".DKV0Md").text
             try:
@@ -45,6 +44,10 @@ class Search():
         else:
             self.code=200 # response ok
         self.text= data
-        self.first=term.text[0]['snippet']
+        self.first=self.text[0]['snippet']
 term=Search("why is the sky blue")
 term.search()
+op=Search("what is 42+56")
+op.search()
+print(term.first)
+print(op.first)
