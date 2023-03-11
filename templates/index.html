@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Chat</title>
+    <style>
+        body{
+            background-color:#333333 !important;
+            color:white;
+
+        }
+        .speak {
+            padding-top:10px;
+        }
+        input {
+            background-color:grey;
+            border: black 3px solid;
+        }
+        button {
+            background-color:grey;
+            border: black 3px solid;
+            color:black
+        }
+        button:hover {
+           background:#333333;
+           color:white;
+        }
+        .chat {
+            padding:50px
+        }
+    </style>
+    <script>
+        var how_justg=false;
+        var thistime=false;
+        function getResponse() {
+            var input=$("#input").val();
+            if (input===""){return}
+            document.getElementById("input").innerHTML="";
+            var nexttime=$("#input").val()
+            if (thistime==="how are you") {
+                var params={ inp: input , how_just: "True"}
+            }
+            else {
+                var params={ inp: input }
+            }
+            console.log(params);
+            $(".log").append('<div id="msg">😃 -- '+input+'</div>');
+            $.get("/res", params).done(function(data) {
+                var res = '<div id="msg">' + data + "</div>";
+                const obj = JSON.parse(JSON.stringify(data));
+                console.log(obj["response"]);
+                $(".log").append(obj["response"]);
+                how_just=obj["how_just"]
+                document
+                .getElementById("input")
+                .scrollIntoView({ block: "start", behavior: "smooth" });
+            });
+            thistime=nexttime
+        }
+        function every() {
+        $("#input").keypress(function(e) {
+            if (e.which == 13) {
+                getResponse();
+                document.getElementById("input").value="";
+                
+            }
+        });}
+        const hi = setInterval(every,300)
+    </script>
+</head>
+<body>
+    <div class="chat">
+        <div class="log">
+        </div>
+        <div class="speak">
+            <input id="input" type="text" placeholder="Type here..." />
+            <button onclick="getResponse()">Reply...</button>
+        </div>
+    </div>
+</body>
+</html>

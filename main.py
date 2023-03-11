@@ -49,16 +49,9 @@ def user(inp,how_just=False):
             robot=random.choice(neut)
     elif re.match(r"[\w\s]*[\d\+\-\*\/]+[\w\s]*", str(c)):
         # regex from https://stackoverflow.com/questions/38649496/python-determine-if-a-string-contains-math
-        alpa=list(string.printable)
-        n=string.digits+"/"+"-"+"+"+"*"
-        for y in n:
-            alpa=str(alpa).replace(str(y),"")
-        for x in alpa:
-            c=c.replace(x,"")
-        try: robot=str(c)+"="+str(eval(str(c))) 
-        except: pass
-    elif cwords.check()==True:
-        robot=cwords.maths()[0]+"="+str(cwords.maths()[1])
+        y=words.WordMaths(str(c))
+        y.check()
+        robot=y.maths()[0]+'='+y.maths()[1]
     else:
         qs=['how','what','who','when','where','why','?','is there']
         if [q for q in qs if(q in c)]: # check if q is question
@@ -69,10 +62,11 @@ def user(inp,how_just=False):
             z=arg.first
             z=z.replace("\\xa0","").replace("...","")
             z=z.replace("?",".").replace("!",".")
-            robot=z.split(".")[0].strip()+"."
+            robot=z.split(".")[0].strip()
         else:
             robot=sentiment(inp)
-    return [f"🤖 -- {robot.strip()}",how_just]
+    return {"response":f"🤖 -- {robot.strip()}",
+            "how_just":how_just}
 print("""
 Welcome to my conversational chatbot! Ask it some questions.
 Note: It is not designed to operate like GPT-3, rather to talk with you.
@@ -93,5 +87,5 @@ def chat():
             nexthow=True
         else:
             nexthow=False
-        print(take[0])
-chat()
+        print(take["response"])
+# chat()

@@ -1,17 +1,19 @@
+import string
 class WordMaths:
     def __init__(self,c):
         self.c=c
         self.ans=""
     def check(self):
-        for a in self.c.words: # obscure char to prevent bug
-            try:
-                if a!="a":
-                    self.ans=eval(a)
-                    self.expr=a
-                break
-            except:
-                pass
-        if self.ans!="":
+        alpa=list(string.printable)
+        n=string.digits+"/"+"-"+"+"+"*"+"("+")" # one by one as it is list
+        for y in n:
+            alpa=str(alpa).replace(str(y),"")
+        for x in alpa:
+            self.c=self.c.replace(x,"")
+        try: 
+            self.ans=str(eval(str(self.c))) 
+            self.expr=str(self.c)
             return True
+        except: return False
     def maths(self):
         return [self.expr,self.ans]
