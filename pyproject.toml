@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling","bs4","requests","lxml","textblob"]
+build-backend = "hatchling.build"
+[project]
+name = "werdl_chat"
+version = "0.0.1"
+authors = [
+  { name="werdl", email="werdl_is_cool@outlook.com" },
+]
+description = "A funny chatbot"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: The Unlicense (Unlicense)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/werdl/chat"
+"Bug Tracker" = "https://github.com/werdl/chat/issues"
