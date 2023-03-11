@@ -1,3 +1,4 @@
 dist/*
 old.py
 test.py
+.vercel

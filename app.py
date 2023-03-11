@@ -8,5 +8,3 @@ def index():
 @app.route("/res")
 def res():
     return main.user(request.args.get('inp'),bool(request.args.get('how_just')))
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
