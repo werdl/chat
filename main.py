@@ -87,4 +87,3 @@ def chat():
         else:
             nexthow=False
         print(take["response"])
-chat()
