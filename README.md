@@ -1,4 +1,7 @@
 ## A basic chatbot
+### Web
+- [werdl.pythonanywhere.com](werdl.pythonanywhere.com)
+- Note: this is only udpated infrequently
 ### Install (OS agnostic)
 #### Reqs
 - Python
