@@ -3,3 +3,4 @@ requests
 lxml
 textblob
 flask
+gunicorn
