@@ -2,3 +2,5 @@ dist/*
 old.py
 test.py
 .vercel
+vercel.json
+pyproject.toml
