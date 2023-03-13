@@ -7,4 +7,4 @@ def index():
 
 @app.route("/res")
 def res():
-    return main.user(request.args.get('inp'),bool(request.args.get('how_just')))
+    return main.user(request.args.get('inp'),bool(request.args.get('how_just')),bool(request.args.get('how_rate')))

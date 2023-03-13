@@ -27,8 +27,8 @@ def user(inp,how_just=False,rate_just=False):
     b=t(inp)
     corrected=b.correct().replace("'","")
     cwords=words.WordMaths(corrected)
+    robot=""
     greetings=["hello","hi","morning","hullo","sup","whats good"]
-    
     if [ele for ele in greetings if(ele in corrected)]: # check if any of greetings in c
         robot=random.choice(greetings) # greet user
     elif "sentiment" in corrected:
@@ -55,7 +55,6 @@ def user(inp,how_just=False,rate_just=False):
             robot=y.maths()[0]+'='+y.maths()[1]
         except:
             pass # proceed to next checks
-
     if corrected=="rate":
         rate_just=True
         robot="Ok, which movie should I rate?"
@@ -84,9 +83,11 @@ def user(inp,how_just=False,rate_just=False):
             z=arg.first
             z=z.replace("\\xa0","").replace("...","")
             z=z.replace("?",".").replace("!",".")
-            robot=z.split(".")[0].strip()
+            if robot=="":
+                robot=z.split(".")[0].strip()
         else:
-            robot=sentiment(inp)
+            if robot=="":
+                robot=sentiment(inp)
     return {"response":f"🤖 -- {robot.strip()}",
             "how_just":how_just,
             "rate_just":rate_just}# we return it like this so that the Flask web app can handle it
@@ -118,4 +119,4 @@ def chat():
         if take['how_just']==True:
             nexthow=True
         print(take["response"])
-chat()
+# chat()

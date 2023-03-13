@@ -4,4 +4,4 @@ lxml
 textblob
 flask
 gunicorn
-imdb
+imdbpy

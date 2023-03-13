@@ -43,6 +43,9 @@
             if (thistime==="how are you") {
                 var params={ inp: input , how_just: "True"}
             }
+            else if (thistime=="rate") {
+                var params={ inp: input , how_rate: "True"}
+            }
             else {
                 var params={ inp: input }
             }
@@ -54,6 +57,7 @@
                 console.log(obj["response"]);
                 $(".log").append(obj["response"]);
                 how_just=obj["how_just"]
+                how_rate=obj["how_rate"]
                 document
                 .getElementById("input")
                 .scrollIntoView({ block: "start", behavior: "smooth" });
