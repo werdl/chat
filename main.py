@@ -47,12 +47,16 @@ def user(inp,how_just=False,rate_just=False):
         else:
             neut=["Nice","*dramatic moment*","It could go either way","Good"]
             robot=random.choice(neut)
-    elif re.match(r"[\w\s]*[\d\+\-\*\/]+[\w\s]*", str(corrected)):
+    if re.match(r"[\w\s]*[\d\+\-\*\/]+[\w\s]*", str(corrected)): # checks
         # regex from https://stackoverflow.com/questions/38649496/python-determine-if-a-string-contains-math
         y=words.WordMaths(str(corrected))
-        y.check()
-        robot=y.maths()[0]+'='+y.maths()[1]
-    elif corrected=="rate":
+        try:
+            y.check()
+            robot=y.maths()[0]+'='+y.maths()[1]
+        except:
+            pass # proceed to next checks
+
+    if corrected=="rate":
         rate_just=True
         robot="Ok, which movie should I rate?"
     elif rate_just==True:
@@ -91,7 +95,13 @@ Welcome to my conversational chatbot! Ask it some questions.
 Note: It is not designed to operate like GPT-3, rather to talk with you.
 Try asking 'how are you'.
 Type 'sentiment' to perform sentiment analysis.
+How about 'rate' and it will rate your movie (data gleaned from IMDb database)
 
+Example:
+😃 -- rate
+🤖 -- Ok, which movie should I rate?
+😃 -- The Hunger Games
+🤖 -- Personally, I loved it
 If it doesn't recognise your input, it will return the top Google search response if it is a question
 Or else say some ambiguous phrases
 
