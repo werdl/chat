@@ -4,3 +4,4 @@ lxml
 textblob
 flask
 gunicorn
+imdb
