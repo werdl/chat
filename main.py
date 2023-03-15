@@ -22,22 +22,40 @@ def sentiment(inp,take=False): # Take input
     except:
         pass
     return robot
-def user(inp,how_just=False,rate_just=False):
+def log(msg,lvl=0):
+    if "-d" not in sys.argv:
+        return
+    from clrprint import clrprint
+    if lvl==0:
+        clrprint(msg,clr='g')
+    elif lvl==1:
+        clrprint(msg,clr='y')
+    elif lvl==2:
+        clrprint(msg,clr='r')
+    else:
+        clrprint(msg,clr='p')
+def user(inp,how_just=False,rate_just=False,round_value=3):
     inp=inp.lower()
+    log(inp)
     b=t(inp)
     corrected=b.correct().replace("'","")
+    log(str(corrected))
     cwords=words.WordMaths(corrected)
     robot=""
     greetings=["hello","hi","morning","hullo","sup","whats good"]
     if [ele for ele in greetings if(ele in corrected)]: # check if any of greetings in c
+        log("greeting")
         robot=random.choice(greetings) # greet user
     elif "sentiment" in corrected:
+        log("sentiment")
         robot=sentiment(inp,True)
     elif "how are you" in corrected:
+        log("how are you")
         choices=["Great","Awful","Fabulous","All the better seeing you"]
         robot=random.choice(choices)+", how about you?"
         how_just=True
     elif how_just==True:
+        log("how are you - response")
         if corrected.sentiment.polarity>0.3:
             good=["Aww,fab!","That's great!","Cool","Love to hear it"]
             robot=random.choice(good)
@@ -48,6 +66,7 @@ def user(inp,how_just=False,rate_just=False):
             neut=["Nice","*dramatic moment*","It could go either way","Good"]
             robot=random.choice(neut)
     if re.match(r"[\w\s]*[\d\+\-\*\/]+[\w\s]*", str(corrected)): # checks
+        log("regex maths")
         # regex from https://stackoverflow.com/questions/38649496/python-determine-if-a-string-contains-math
         y=words.WordMaths(str(corrected))
         try:
@@ -57,9 +76,12 @@ def user(inp,how_just=False,rate_just=False):
         except:
             pass # proceed to next checks
     if corrected=="rate":
+        log("rate part1")
         rate_just=True
         robot="Ok, which movie should I rate?"
+
     elif rate_just==True:
+        log("rating movie input")
         y=words.Movie(str(corrected))
         response=y.alli()
         res2=['That movie was good','A great title!','Personally, I loved it']
@@ -74,11 +96,12 @@ def user(inp,how_just=False,rate_just=False):
         else: #error handling
             concat=res2+res1+res0
             robot=random.choice(concat)
+        rate_just=False
     else:
+        log("else condition")
         qs=['how','what','who','when','where','why','?','is there']
         if [q for q in qs if(q in corrected)]: # check if q is question
-            if "-d" in sys.argv:
-                print(corrected) # check for debug
+            log("google")
             arg=scrape.Search(str(corrected))
             arg.search()
             z=arg.first
@@ -87,15 +110,23 @@ def user(inp,how_just=False,rate_just=False):
             if robot=="":
                 robot=z.split(".")[0].strip()
         else:
+            log("else",1)
             from semantic3.units import ConversionService
             service = ConversionService()
             try:
                 #using raw inp so 'kg' and the like arent corrected
                 answ=str(service.convert(str(inp))).replace("'","").replace("(","").replace(")","").split(" ")
-                robot=str(round(float(answ[0]),3))+answ[1]
+                robot=str(round(float(answ[0]),round_value))+answ[1]
+                log("successful unit conversion")
             except:
-                if robot=="":
-                    robot=sentiment(inp)
+                try:
+                    from mathparse import mathparse
+                    robot=str(round(mathparse.parse(inp),round_value))
+                    log("successful maths equation")
+                except:
+                    if robot=="":
+                        log("sentiment from else",2)
+                        robot=sentiment(inp)
     return {"response":f"🤖 -- {robot.strip()}",
             "how_just":how_just,
             "rate_just":rate_just}# we return it like this so that the Flask web app can handle it
