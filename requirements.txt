@@ -6,3 +6,5 @@ imdbpy
 semantic3
 clrprint
 mathparse
+gunicorn
+flask
