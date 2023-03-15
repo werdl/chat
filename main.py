@@ -52,7 +52,8 @@ def user(inp,how_just=False,rate_just=False):
         y=words.WordMaths(str(corrected))
         try:
             y.check()
-            robot=y.maths()[0]+'='+y.maths()[1]
+            if y.maths()[0]!=y.maths()[1]:
+                robot=y.maths()[0]+'='+y.maths()[1]
         except:
             pass # proceed to next checks
     if corrected=="rate":
@@ -86,8 +87,14 @@ def user(inp,how_just=False,rate_just=False):
             if robot=="":
                 robot=z.split(".")[0].strip()
         else:
-            if robot=="":
-                robot=sentiment(inp)
+            from semantic3.units import ConversionService
+            service = ConversionService()
+            try:
+                answ=str(service.convert(str(corrected))).replace("'","").replace("(","").replace(")","").split(" ")
+                robot=str(round(float(answ[0]),3))+answ[1]
+            except:
+                if robot=="":
+                    robot=sentiment(inp)
     return {"response":f"🤖 -- {robot.strip()}",
             "how_just":how_just,
             "rate_just":rate_just}# we return it like this so that the Flask web app can handle it
@@ -116,7 +123,11 @@ def chat():
         take=user(inp,nexthow,nextrate)
         if take['rate_just']==True:
             nextrate=True
+        else:
+            nextrate=False
         if take['how_just']==True:
             nexthow=True
+        else:
+            nexthow=False
         print(take["response"])
-# chat()
+chat()
