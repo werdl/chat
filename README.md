@@ -8,7 +8,11 @@
 - greet you
 ### Ways to access
 - Web interface (flask)
-- 
+- CLI (vanilla Python)
+### Known Limitations
+- advanced maths operations don't work
+- BODMAS/BIDMAS not always applied
+- Google scraping a bit vunerable
 ### Install (OS agnostic)
 ##### [werdl.onrender.com](werdl.onrender.com)
 #### Reqs
