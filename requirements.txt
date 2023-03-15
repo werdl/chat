@@ -5,3 +5,4 @@ textblob
 flask
 gunicorn
 imdbpy
+semantic3

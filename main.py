@@ -90,7 +90,8 @@ def user(inp,how_just=False,rate_just=False):
             from semantic3.units import ConversionService
             service = ConversionService()
             try:
-                answ=str(service.convert(str(corrected))).replace("'","").replace("(","").replace(")","").split(" ")
+                #using raw inp so 'kg' and the like arent corrected
+                answ=str(service.convert(str(inp))).replace("'","").replace("(","").replace(")","").split(" ")
                 robot=str(round(float(answ[0]),3))+answ[1]
             except:
                 if robot=="":

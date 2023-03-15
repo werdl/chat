@@ -1,4 +1,14 @@
 ## A basic chatbot
+### Things it can do
+- Do maths problems
+- Search google for questions
+- convert units
+- rate movies
+- ask how you are
+- greet you
+### Ways to access
+- Web interface (flask)
+- 
 ### Install (OS agnostic)
 ##### [werdl.onrender.com](werdl.onrender.com)
 #### Reqs
