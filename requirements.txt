@@ -2,7 +2,5 @@ bs4
 requests
 lxml
 textblob
-flask
-gunicorn
 imdbpy
 semantic3
