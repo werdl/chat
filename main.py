@@ -83,16 +83,17 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
     elif rate_just==True:
         log("rating movie input")
         y=words.Movie(str(corrected))
-        response=y.alli()
-        res2=['That movie was good','A great title!','Personally, I loved it']
-        res1=['It was ok','I\'ve seen better','Pretty good...']
-        res0=['Wow, that was awful','Not worth the ticket','I hated it!']
+        response=y.alli()[0]
+        rating_raw=y.alli()[1]
+        res2=['That movie was good.','A great title!','Personally, I loved it.']
+        res1=['It was ok.','I\'ve seen better.','Pretty good...']
+        res0=['Wow, that was awful.','Not worth the ticket.','I hated it!']
         if response==2:
-            robot=random.choice(res2)
+            robot=random.choice(res2)+f" It recieved {rating_raw}/10 on IMDb"
         elif response==1:
-            robot=random.choice(res1)
+            robot=random.choice(res1)+f" It recieved {rating_raw}/10 on IMDb"
         elif response==0:
-            robot=random.choice(res0)
+            robot=random.choice(res0)+f" It recieved {rating_raw}/10 on IMDb"
         else: #error handling
             concat=res2+res1+res0
             robot=random.choice(concat)

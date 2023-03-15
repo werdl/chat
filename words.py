@@ -43,6 +43,6 @@ class Movie:
     def alli(self): # all in one for ease of use
         self.search()
         self.rate()
-        return self.good()
+        return [self.good(),self.toprate]
 # y=Movie("Hunger Games")
 # print(y.alli())
