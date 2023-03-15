@@ -10,7 +10,7 @@
         body{
             background-color:#333333 !important;
             color:white;
-
+            font-family:monospace
         }
         .speak {
             padding-top:10px;
@@ -31,6 +31,57 @@
         .chat {
             padding:50px
         }
+        #msg {
+            font-size: 1.75vh;
+            padding-left:10px
+        }
+        .log:first-child{
+            padding-top:10px
+        }
+        .log:last-child{
+            padding-bottom:10px
+        }
+        h1 {
+            padding:20px;
+            text-align:center
+        }
+        code {
+            background:darkcyan;
+            border-radius: 3px;
+        }
+        .log {
+            border:3px black dotted;
+            width:375px
+        }
+        a {
+            color:lightblue
+        }
+        #known-limitations {
+            color:lightcoral
+        }
+        #things-it-can-do,#get-chatting {
+            color:lightgreen
+        }
+        #ways-to-access {
+            color:aquamarine
+        }
+        #install-os-agnostic-{
+            color:aquamarine
+        }
+        .info {
+            padding:10px;
+            padding-left:100px
+        }
+        .flex {
+            display:flex;
+            flex-direction: row;
+        }
+        #long {
+            font-size:1.25vh
+        }
+        .short {
+            font-size:1.25vh
+        }
     </style>
     <script>
         var how_justg=false;
@@ -50,12 +101,18 @@
                 var params={ inp: input }
             }
             console.log(params);
-            $(".log").append('<div id="msg">😃 -- '+input+'</div>');
+            $(".log").append('<div id="msg" class="short">😃 -- '+input+'</div>');
             $.get("/res", params).done(function(data) {
-                var res = '<div id="msg">' + data + "</div>";
                 const obj = JSON.parse(JSON.stringify(data));
+                if (obj["response"].substr(5).length>50) {
+                    var res = '<div id="msg" class="short">🤖 -- <span id="long">' + obj["response"].substr(5) + "</span></div>";
+                }
+                else {
+                    var res = '<div id="msg">' + obj["response"] + "</div>";
+                }
+  
                 console.log(obj["response"]);
-                $(".log").append(obj["response"]);
+                $(".log").append(res);
                 how_just=obj["how_just"]
                 how_rate=obj["how_rate"]
                 document
@@ -76,12 +133,59 @@
     </script>
 </head>
 <body>
-    <div class="chat">
-        <div class="log">
+    <h1>Welcome to werdl/chat</h1>
+    <div class="flex">
+        <div class="chat">
+            <div class="log">
+            </div>
+            <div class="speak">
+                <input id="input" type="text" placeholder="Type here..." />
+                <button onclick="getResponse()">Reply...</button>
+            </div>
         </div>
-        <div class="speak">
-            <input id="input" type="text" placeholder="Type here..." />
-            <button onclick="getResponse()">Reply...</button>
+        <div class="info">
+            <h2 id="a-basic-chatbot">A basic chatbot</h2>
+            
+            <ul>
+            <h3 id="things-it-can-do">Things it can do</h3>
+            <li>Do maths problems</li>
+            <li>Search google for questions</li>
+            <li>convert units</li>
+            <li>rate movies</li>
+            <li>ask how you are</li>
+            <li>greet you<h3 id="ways-to-access">Ways to access</h3>
+            </li>
+            <li>Web interface (flask)</li>
+            <li>CLI (vanilla Python)<h3 id="known-limitations">Known Limitations</h3>
+            </li>
+            <li>BODMAS/BIDMAS not always applied</li>
+            <li>Google scraping a bit vunerable<h3 id="install-os-agnostic-">Install (OS agnostic)</h3>
+            <h5 id="-werdl-onrender-com-werdl-onrender-com-"><a href="http://werdl.onrender.com">werdl.onrender.com</a></h5>
+            <h4 id="reqs">Reqs</h4>
+            </li>
+            <li>Python</li>
+            <li>requirements.txt<pre><code class="lang-bash">pip <span class="hljs-keyword">install</span> werdl-chat</code></pre>
+            <h3 id="get-chatting">Get chatting</h3>
+            </li>
+            <li>New file
+            <br>
+            <code class="lang-python"><span class="hljs-keyword">from</span> werdl-chat <span class="hljs-keyword">import</span> *</code>
+            <br>
+            <code>
+            chat()
+            </code>
+            </li>
+            <h3>Thanks to the following modules:</h3>
+            <li>bs4 (html parsing)</li>
+            <li>requests (HTTP requests)</li>
+            <li>lxml (html parsing)</li>
+            <li>textblob (spell checking)</li>
+            <li>imdbpy (IMDb API)</li>
+            <li>semantic3 (unit conversion)</li>
+            <li>clrprint (debugging)</li>
+            <li>mathparse (maths equation)</li>
+            <li>gunicorn &amp flask (website)</li>
+        </ul>
         </div>
     </div>
 </body>
