@@ -82,18 +82,24 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
 
     elif rate_just==True:
         log("rating movie input")
+        print("🤖 -- Please wait while your result is computed...")
         y=words.Movie(str(corrected))
         response=y.alli()[0]
         rating_raw=y.alli()[1]
+        import rottentomatoes as rt
+        tom=rt.tomatometer(corrected)['value']
+        aud=rt.audience_score(corrected)['value']
+        weighted=(2/3*(tom))+(1/3*(aud))
         res2=['That movie was good.','A great title!','Personally, I loved it.']
         res1=['It was ok.','I\'ve seen better.','Pretty good...']
         res0=['Wow, that was awful.','Not worth the ticket.','I hated it!']
+        suffix=f" Released in {rt.year_released(corrected)}, the {rt.genres(corrected)[0]} film recieved {int(weighted)}/100 on Rotten Tomatoes and"+f" {rating_raw}/10 on IMDb."
         if response==2:
-            robot=random.choice(res2)+f" It recieved {rating_raw}/10 on IMDb"
+            robot=random.choice(res2)+suffix
         elif response==1:
-            robot=random.choice(res1)+f" It recieved {rating_raw}/10 on IMDb"
+            robot=random.choice(res1)+suffix
         elif response==0:
-            robot=random.choice(res0)+f" It recieved {rating_raw}/10 on IMDb"
+            robot=random.choice(res0)+suffix
         else: #error handling
             concat=res2+res1+res0
             robot=random.choice(concat)
@@ -108,7 +114,7 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
             z=arg.first
             z=z.replace("\\xa0","").replace("...","")
             z=z.replace("?",".").replace("!",".")
-            if robot=="":
+            if robot==""or robot in greetings:
                 robot=z.split(".")[0].strip()
         else:
             log("else",1)
@@ -125,7 +131,7 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
                     robot=str(round(mathparse.parse(inp),round_value))
                     log("successful maths equation")
                 except:
-                    if robot=="":
+                    if robot=="" or robot in greetings:
                         log("sentiment from else",2)
                         robot=sentiment(inp)
     return {"response":f"🤖 -- {robot.strip()}",
