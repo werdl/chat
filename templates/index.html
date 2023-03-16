@@ -103,7 +103,14 @@
             }
             console.log(params);
             $(".log").append('<div id="msg" class="short">😃 -- '+input+'</div>');
+            if (thistime=="rate") {
+            $(".log").append('<div id="msg" class="short">🤖 -- Please wait while your result is computed</div>')
+            }
+            $("button").css("display","none")
+            $("input").css("display","none")
             $.get("/res", params).done(function(data) {
+                $("button").css("display","inline")
+                $("input").css("display","inline")
                 const obj = JSON.parse(JSON.stringify(data));
                 if (obj["response"].substr(5).length>50) {
                     var res = '<div id="msg" class="short">🤖 -- <span id="long">' + obj["response"].substr(5) + "</span></div>";

@@ -23,9 +23,13 @@ class Movie:
     def __init__(self,moviename):
         self.moviename=moviename
     def search(self):
-        result=im.search_movie(self.moviename)
-        self.topresult=result[0]['title']
-        self.topid=result[0].movieID
+        try:
+            result=im.search_movie(self.moviename)
+            self.topresult=result[0]['title']
+            self.topid=result[0].movieID
+        except imdb.IMDbDataAccessError:
+            self.topresult="error"
+            self.topid="0"
     def get(self):
         return {'title':self.topresult,'id':self.topid}
     def rate(self):
@@ -34,7 +38,9 @@ class Movie:
         self.toprate=series.data['rating']
         return self.toprate
     def good(self):
-        if self.toprate>7:
+        if self.toprate=="error":
+            return -1
+        elif self.toprate>7:
             return 2
         elif self.toprate>4:
             return 1

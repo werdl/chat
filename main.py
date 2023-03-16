@@ -43,7 +43,7 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
     cwords=words.WordMaths(corrected)
     robot=""
     greetings=["hello","hi","morning","hullo","sup","whats good"]
-    if [ele for ele in greetings if(ele in corrected)]: # check if any of greetings in c
+    if corrected in greetings: # check if any of greetings in corrected
         log("greeting")
         robot=random.choice(greetings) # greet user
     elif "sentiment" in corrected:
@@ -79,30 +79,48 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
         log("rate part1")
         rate_just=True
         robot="Ok, which movie should I rate?"
-
-    elif rate_just==True:
+    elif "rate" in corrected and corrected!="rate":
+        rate_just=True
+        corrected=corrected[5:]
+    if rate_just==True:
         log("rating movie input")
         print("🤖 -- Please wait while your result is computed...")
         y=words.Movie(str(corrected))
-        response=y.alli()[0]
-        rating_raw=y.alli()[1]
+        failed=0
+        try:
+            response=y.alli()[0]
+            rating_raw=y.alli()[1]
+        except:
+            failed=1
+            response=""
         import rottentomatoes as rt
-        tom=rt.tomatometer(corrected)['value']
-        aud=rt.audience_score(corrected)['value']
-        weighted=(2/3*(tom))+(1/3*(aud))
+        try:
+            tom=rt.tomatometer(corrected)['value']
+            aud=rt.audience_score(corrected)['value']
+            weighted=(2/3*(tom))+(1/3*(aud))
+        except:
+            failed=1
         res2=['That movie was good.','A great title!','Personally, I loved it.']
         res1=['It was ok.','I\'ve seen better.','Pretty good...']
         res0=['Wow, that was awful.','Not worth the ticket.','I hated it!']
-        suffix=f" Released in {rt.year_released(corrected)}, the {rt.genres(corrected)[0]} film recieved {int(weighted)}/100 on Rotten Tomatoes and"+f" {rating_raw}/10 on IMDb."
-        if response==2:
+        try:
+            suffix=f" Released in {rt.year_released(corrected)}, the {rt.genres(corrected)[0]} film recieved {int(weighted)}/100 on Rotten Tomatoes and"+f" {rating_raw}/10 on IMDb."
+        except:
+            failed=1
+
+        avg=(response*50)+weighted
+        avg=avg/2/50
+        if avg>=2:
             robot=random.choice(res2)+suffix
-        elif response==1:
+        elif avg>=1:
             robot=random.choice(res1)+suffix
-        elif response==0:
+        elif avg>=0:
             robot=random.choice(res0)+suffix
         else: #error handling
             concat=res2+res1+res0
             robot=random.choice(concat)
+        if response==-1 or failed==1:
+            robot="That movie wasn't found..."
         rate_just=False
     else:
         log("else condition")
@@ -131,7 +149,7 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
                     robot=str(round(mathparse.parse(inp),round_value))
                     log("successful maths equation")
                 except:
-                    if robot=="" or robot in greetings:
+                    if robot=="":
                         log("sentiment from else",2)
                         robot=sentiment(inp)
     return {"response":f"🤖 -- {robot.strip()}",
@@ -147,8 +165,9 @@ How about 'rate' and it will rate your movie (data gleaned from IMDb database)
 Example:
 😃 -- rate
 🤖 -- Ok, which movie should I rate?
-😃 -- The Hunger Games
-🤖 -- Personally, I loved it
+😃 -- hunger games
+🤖 -- Please wait while your result is computed...
+🤖 -- Personally, I loved it. Released in 2015, the Sci-fi film recieved 68/100 on Rotten Tomatoes and 7.2/10 on IMDb.
 If it doesn't recognise your input, it will return the top Google search response if it is a question
 Or else say some ambiguous phrases
 
