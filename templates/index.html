@@ -46,8 +46,7 @@
             text-align:center
         }
         code {
-            background:darkcyan;
-            border-radius: 3px;
+            background:lightslategrey;
         }
         .log {
             border:3px black dotted;
@@ -70,7 +69,8 @@
         }
         .info {
             padding:10px;
-            padding-left:100px
+            padding-left:100px;
+            font-size:0.8vh
         }
         .flex {
             display:flex;
@@ -82,6 +82,9 @@
         }
         .short {
             font-size:1.25vh
+        }
+        .hmmm {
+            background:lightslategray
         }
     </style>
     <script>
@@ -152,7 +155,36 @@
             </div>
         </div>
         <div class="info">
-            <h2 id="a-basic-chatbot">A basic chatbot</h2>
+Welcome to my conversational chatbot! Ask it some questions.
+<br>
+Note: It is not designed to operate like GPT-3, rather to talk with you. Try asking 'how are you'.
+<br>
+Type <b>'sentiment'</b> to perform sentiment analysis.
+<br>
+How about <b>'rate'</b> and it will rate your movie (data gleaned from IMDb database)
+<br>
+Or even <b>'rate movie'</b> and it will rate your movie
+<br>
+Or perhaps <b>'weather in city country'</b>
+<br>
+<br>
+Example:
+<span style="color:lightgrey">
+<br>😃 -- rate
+<br>🤖 -- Ok, which movie should I rate?
+<br>😃 -- hunger games
+<br>🤖 -- Please wait while your result is computed...
+<br>🤖 -- Personally, I loved it. Released in 2015, the Sci-fi film recieved 68/100 on Rotten Tomatoes and 7.2/10 on IMDb.
+</span>
+<br>
+<br>If it doesn't recognise your input, it will return the top Google search response if it is a question
+<br>Or else say some ambiguous phrases
+
+<br>It can also evaluate maths problems
+
+<br>The weather API only works if your provide a country too (it's the only decent free one)
+<br>However, you can also search with IP addresses, so its a trade-off.
+                <h2 id="a-basic-chatbot">A basic chatbot</h2>
             
             <ul>
             <h3 id="things-it-can-do">Things it can do</h3>
@@ -193,6 +225,9 @@
             <li>clrprint (debugging)</li>
             <li>mathparse (maths equation)</li>
             <li>gunicorn &amp flask (website)</li>
+            <h3>And the following web-based APIs:</h3>
+            <li>WeatherAPI.com</li>
+            <li>google.com (self-coded 'API')</li>
         </ul>
         </div>
     </div>

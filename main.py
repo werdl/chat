@@ -1,5 +1,5 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape,words,string
+import sys,random,re,scrape,words,string,requests
 def sentiment(inp,take=False): # Take input 
     if take==True:
         inp=str(input("😃 -- "))
@@ -82,6 +82,15 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
     elif "rate" in corrected and corrected!="rate":
         rate_just=True
         corrected=corrected[5:]
+    if "weather in" in corrected or "weather at"in corrected:
+        public_key="8cb3dbfba4d14d75892172549231703"
+        try:
+            r=requests.get(f"http://api.weatherapi.com/v1/current.json?key={public_key}&q={corrected}&aqi=no")
+            j=r.json()
+            robot=f"Weather in {j['location']['name']}, {j['location']['country']} - Temperature - {j['current']['temp_c']}°C, Wind Speed - {j['current']['wind_mph']}mph. It is {j['current']['condition']['text'].lower()}."
+            log("successful weather request")
+        except:
+            pass
     if rate_just==True:
         log("rating movie input")
         print("🤖 -- Please wait while your result is computed...")
@@ -161,7 +170,7 @@ Note: It is not designed to operate like GPT-3, rather to talk with you.
 Try asking 'how are you'.
 Type 'sentiment' to perform sentiment analysis.
 How about 'rate' and it will rate your movie (data gleaned from IMDb database)
-
+Or even 'rate <movie>' and it will rate your movie
 Example:
 😃 -- rate
 🤖 -- Ok, which movie should I rate?
@@ -172,6 +181,9 @@ If it doesn't recognise your input, it will return the top Google search respons
 Or else say some ambiguous phrases
 
 It can also evaluate maths problems
+
+The weather API only works if your provide a country too (it's the only decent free one)
+However, you can also search with IP addresses, so its a trade-off.
 """)
 def chat():
     nexthow=False
