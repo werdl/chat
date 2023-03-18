@@ -6,6 +6,7 @@
 - rate movies
 - ask how you are
 - greet you
+- search weather
 ### Ways to access
 - Web interface (flask)
 - CLI (vanilla Python)
