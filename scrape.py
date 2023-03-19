@@ -53,10 +53,11 @@ class Search():
           "title": title,
           "snippet": snippet,
           "links": links
-        })  # return as nested dict
+        })  # search through for useful info
     if data == "":
       self.code = 500  # internal error
     else:
       self.code = 200  # response ok
     self.text = data
-    self.first = self.text[0]['snippet']
+    try:self.first = self.text[0]['snippet']
+    except:self.first=self.text

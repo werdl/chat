@@ -108,7 +108,7 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
             page=wikipedia.page(info[0])
             sum=sent_tokenize(page.summary)
             po=""
-            for o in range(5):
+            for o in range(7):
                 po+=sum[o]
             robot=po
         except:
@@ -194,6 +194,7 @@ Try asking 'how are you'.
 Type 'sentiment' to perform sentiment analysis.
 How about 'rate' and it will rate your movie (data gleaned from IMDb database)
 Or even 'rate <movie>' and it will rate your movie
+Perhaps you could try 'search query' to search wikipedia for query
 Example:
 😃 -- rate
 🤖 -- Ok, which movie should I rate?
@@ -204,6 +205,8 @@ If it doesn't recognise your input, it will return the top Google search respons
 Or else say some ambiguous phrases
 
 It can also evaluate maths problems
+
+The APIs used aren't perfect, but they are good enough for the purposes of this chatbot
 
 The weather API only works if your provide a country too (it's the only decent free one)
 However, you can also search with IP addresses, so its a trade-off.
