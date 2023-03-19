@@ -1,5 +1,5 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape,words,string,requests,json,urllib
+import sys,random,re,scrape,words,string,requests,json,bs4,lxml
 from nltk.tokenize import sent_tokenize
 def sentiment(inp,take=False): # Take input 
     if take==True:
@@ -97,22 +97,31 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
         except:
             pass
     elif "search" in corrected:
-        # processed=inp[7:]
-        # params={'format':'json','action':'query','prop':'extracts','redirects':1,'titles':processed}
-        # scrape2=requests.get("http://en.wikipedia.org/w/api.php&exintro&explaintext",params=params)
-        # toRobot=scrape2.json()['query']['pages']
-        # toList=list(toRobot)[0]
+        # 
         import wikipedia
         try:
             info=wikipedia.search(inp[7:])
             page=wikipedia.page(info[0])
             sum=sent_tokenize(page.summary)
             po=""
-            for o in range(7):
+            for o in range(10):
                 po+=sum[o]
             robot=po
         except:
-            robot="That page was not found."
+            
+            processed=inp[7:]
+            params={'format':'json','action':'query','prop':'extracts','redirects':1,'titles':processed}
+            scrape2=requests.get("http://en.wikipedia.org/w/api.php",params=params)
+            soup=bs4.BeautifulSoup(scrape2.text,features='lxml')
+            x=json.loads(soup.get_text())
+            toRobot=x['query']['pages']
+            toList=list(toRobot.keys())[0]
+            sum=sent_tokenize(toRobot[toList]['extract'])
+            po=""
+            for p in range(7):
+                po+=sum[p]
+            robot=po
+
         
     if rate_just==True:
         log("rating movie input")
