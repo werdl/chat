@@ -2,3 +2,8 @@ dist/*
 old.py
 test.py
 .vercel
+throttle.ctrl
+.vercel/*
+.cache/*
+.apicache-py3/*
+chat.tar.gz
