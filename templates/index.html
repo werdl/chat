@@ -32,7 +32,7 @@
             padding:50px
         }
         #msg {
-            font-size: 1.75vw;
+            font-size: 0.9rem;
             padding-left:10px
         }
         .log:first-child{
@@ -50,7 +50,7 @@
         }
         .log {
             border:3px black dotted;
-            width:375px
+            width:30.75vw
         }
         a {
             color:lightblue
@@ -70,7 +70,7 @@
         .info {
             padding:10px;
             padding-left:100px;
-            font-size:calc(sqrt(0.8vw*0.8vh))
+            font-size:0.55rem
         }
         .flex {
             display:flex;
@@ -78,10 +78,11 @@
             justify-content: center;
         }
         #long {
-            font-size:calc(sqrt(1vw*1vh))
+            font-size:0.75rem;
+            line-height: 0%;
         }
         .short {
-            font-size:calc(sqrt(1.25vw*1.25vh))
+            font-size:0.85rem
         }
         .hmmm {
             background:lightslategray
@@ -122,13 +123,16 @@
 
             $.get("/res?"+new URLSearchParams(params), function(data){
     content= data;
-    if (content["response"].substr(5).length>50) {
-                    var res = '<div id="msg">🤖 -- <span id="long">' + content["response"] + "</span></div>";
+    console.log(content["response"].length)
+    if ((content["response"].length)>50) {
+        console.log("jmhfgsdjk")
+                    var res = '<div id="msg">🤖 -- <span id="long">' + content["response"].substr(5) + "</span></div>";
                 }
-                else {      var res = '<div id="msg">' + content["response"] + "</div>";
+                else {   
+                    var res = '<div id="msg">' + content["response"] + "</div>";
               
                 }
-    $('.log').append(    '<div id="msg" class="short">'+content["response"]+'</div>');
+    $('.log').append( res);
 }).fail(function() {
     $('.log').append(    '<div id="msg" class="short">🤖 -- An error occured</div>');
 });
