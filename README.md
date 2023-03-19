@@ -7,6 +7,7 @@
 - ask how you are
 - greet you
 - search weather
+- summarise wikipedia pages
 ### Ways to access
 - Web interface (flask)
 - CLI (vanilla Python)

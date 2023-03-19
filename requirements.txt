@@ -8,3 +8,4 @@ clrprint
 mathparse
 gunicorn
 flask
+wikipedia
