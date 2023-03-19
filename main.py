@@ -108,19 +108,20 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
                 po+=sum[o]
             robot=po
         except:
-            
-            processed=inp[7:]
-            params={'format':'json','action':'query','prop':'extracts','redirects':1,'titles':processed}
-            scrape2=requests.get("http://en.wikipedia.org/w/api.php",params=params)
-            soup=bs4.BeautifulSoup(scrape2.text,features='lxml')
-            x=json.loads(soup.get_text())
-            toRobot=x['query']['pages']
-            toList=list(toRobot.keys())[0]
-            sum=sent_tokenize(toRobot[toList]['extract'])
-            po=""
-            for p in range(7):
-                po+=sum[p]
-            robot=po
+            try:
+                processed=inp[7:]
+                params={'format':'json','action':'query','prop':'extracts','redirects':1,'titles':processed}
+                scrape2=requests.get("http://en.wikipedia.org/w/api.php",params=params)
+                soup=bs4.BeautifulSoup(scrape2.text,features='lxml')
+                x=json.loads(soup.get_text())
+                toRobot=x['query']['pages']
+                toList=list(toRobot.keys())[0]
+                sum=sent_tokenize(toRobot[toList]['extract'])
+                po=""
+                for p in range(7):
+                    po+=sum[p]
+                robot=po
+            except:pass
 
         
     if rate_just==True:
@@ -235,4 +236,4 @@ def chat():
         else:
             nexthow=False
         print(take["response"])
-chat()
+# chat()
