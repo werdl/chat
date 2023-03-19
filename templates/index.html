@@ -78,7 +78,7 @@
             justify-content: center;
         }
         #long {
-            font-size:calc(sqrt(1.25vw*1.25vh))
+            font-size:calc(sqrt(1vw*1vh))
         }
         .short {
             font-size:calc(sqrt(1.25vw*1.25vh))
@@ -90,6 +90,12 @@
     <script>
         var how_justg=false;
         var thistime=false;
+        function slog(msg) //server log
+        {
+            $.get("/log?msg="+msg,function() {
+                console.log(msg+" sent to server log")
+            })
+        }
         function getResponse() {
             var input=$("#input").val();
             if (input===""){return}
@@ -99,11 +105,13 @@
                 var params={ inp: input , how_just: "True"}
             }
             else if (thistime=="rate") {
-                var params={ inp: input , how_rate: "True"}
+                var params={inp: input , how_rate: "True"}
             }
             else {
                 var params={ inp: input }
             }
+            slog(JSON.stringify(params))
+            console.log(JSON.stringify(params))
             console.log(params);
             $(".log").append('<div id="msg" class="short">😃 -- '+input+'</div>');
             if (thistime=="rate") {
@@ -114,7 +122,15 @@
 
             $.get("/res?"+new URLSearchParams(params), function(data){
     content= data;
+    if (content["response"].substr(5).length>50) {
+                    var res = '<div id="msg">🤖 -- <span id="long">' + content["response"] + "</span></div>";
+                }
+                else {      var res = '<div id="msg">' + content["response"] + "</div>";
+              
+                }
     $('.log').append(    '<div id="msg" class="short">'+content["response"]+'</div>');
+}).fail(function() {
+    $('.log').append(    '<div id="msg" class="short">🤖 -- An error occured</div>');
 });
 
             $("button").css("display","inline")

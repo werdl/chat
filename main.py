@@ -1,5 +1,6 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape,words,string,requests
+import sys,random,re,scrape,words,string,requests,json,urllib
+from nltk.tokenize import sent_tokenize
 def sentiment(inp,take=False): # Take input 
     if take==True:
         inp=str(input("😃 -- "))
@@ -34,6 +35,10 @@ def log(msg,lvl=0):
         clrprint(msg,clr='r')
     else:
         clrprint(msg,clr='p')
+def flasklog(msg):
+    import datetime
+    print(f"\033[1m{datetime.datetime.fromtimestamp(datetime.datetime.now().timestamp(),tz=None)} Server Log - {msg}\033[0m")
+    return msg
 def user(inp,how_just=False,rate_just=False,round_value=3):
     inp=inp.lower()
     log(inp)
@@ -91,6 +96,24 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
             log("successful weather request")
         except:
             pass
+    elif "search" in corrected:
+        # processed=inp[7:]
+        # params={'format':'json','action':'query','prop':'extracts','redirects':1,'titles':processed}
+        # scrape2=requests.get("http://en.wikipedia.org/w/api.php&exintro&explaintext",params=params)
+        # toRobot=scrape2.json()['query']['pages']
+        # toList=list(toRobot)[0]
+        import wikipedia
+        try:
+            info=wikipedia.search(inp[7:])
+            page=wikipedia.page(info[0])
+            sum=sent_tokenize(page.summary)
+            po=""
+            for o in range(5):
+                po+=sum[o]
+            robot=po
+        except:
+            robot="That page was not found."
+        
     if rate_just==True:
         log("rating movie input")
         print("🤖 -- Please wait while your result is computed...")
@@ -200,4 +223,4 @@ def chat():
         else:
             nexthow=False
         print(take["response"])
-# chat()
+chat()
