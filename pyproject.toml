@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling","bs4","requests","lxml","textblob","imdbpy","semantic3","clrprint","mathparse"]
+requires = ["hatchling","bs4","requests","lxml","textblob","imdbpy","semantic3","clrprint","mathparse","gunicorn","flask","wikipedia"]
 build-backend = "hatchling.build"
 [project]
-name = "werdl_chat"
-version = "0.0.2"
-authors = [
+name = "werdlchat"
+version = "0.0.6"
+authors =[
   { name="werdl", email="werdl_is_cool@outlook.com" },
 ]
 description = "A funny chatbot"

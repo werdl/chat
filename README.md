@@ -26,7 +26,7 @@ pip install werdl-chat
 ### Get chatting
 - New file
 ```python
-from werdl-chat import *
+from werdlchat import *
 chat()
 ```
 
