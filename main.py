@@ -1,5 +1,5 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape,words,string,requests,json,bs4,lxml
+import sys,random,re,scrape,words,requests,json,bs4,lxml
 from nltk.tokenize import sent_tokenize
 def sentiment(inp,take=False): # Take input 
     if take==True:
