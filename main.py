@@ -226,7 +226,11 @@ def chat():
     nextrate=False
     while True:
         inp=str(input("😃 -- "))
-        take=user(inp,nexthow,nextrate)
+        try:
+            take=user(inp,nexthow,nextrate)
+            print(take["response"])
+        except:
+            print("🤖 -- An error occured")
         if take['rate_just']==True:
             nextrate=True
         else:
@@ -235,6 +239,5 @@ def chat():
             nexthow=True
         else:
             nexthow=False
-        print(take["response"])
 if "-r" in sys.argv:
     chat()
