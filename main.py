@@ -236,4 +236,5 @@ def chat():
         else:
             nexthow=False
         print(take["response"])
-# chat()
+if "-r" in sys.argv:
+    chat()
