@@ -2,6 +2,7 @@ dist/*
 old.py
 test.py
 .vercel
+notes.txt
 throttle.ctrl
 .vercel/*
 .cache/*
