@@ -50,6 +50,8 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
     cwords=words.WordMaths(corrected)
     robot=""
     greetings=["hello","hi","morning","hullo","sup","whats good"]
+    if inp=="42 adams":
+        robot="The Answer"
     if corrected in greetings: # check if any of greetings in corrected
         log("greeting")
         robot=random.choice(greetings) # greet user
@@ -167,6 +169,8 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
         if response==-1 or failed==1:
             robot="That movie wasn't found..."
         rate_just=False
+    elif inp=="42":
+        robot="Marvin Approves"
     else:
         log("else condition")
         qs=['how','what','who','when','where','why','?','is there']
