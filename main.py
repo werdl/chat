@@ -1,6 +1,8 @@
 from textblob import TextBlob as t
 import sys,random,re,scrape,words,string,requests,json,bs4,lxml
 from nltk.tokenize import sent_tokenize
+import nltk
+nltk.download('punkt')
 def sentiment(inp,take=False): # Take input 
     if take==True:
         inp=str(input("😃 -- "))
@@ -139,24 +141,25 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
         try:
             tom=rt.tomatometer(corrected)['value']
             aud=rt.audience_score(corrected)['value']
-            weighted=(2/3*(tom))+(1/3*(aud))
+            weighted=(tom+aud)/2
         except:
             failed=1
+            weighted=0
         res2=['That movie was good.','A great title!','Personally, I loved it.']
         res1=['It was ok.','I\'ve seen better.','Pretty good...']
         res0=['Wow, that was awful.','Not worth the ticket.','I hated it!']
         try:
-            suffix=f" Released in {rt.year_released(corrected)}, the {rt.genres(corrected)[0]} film recieved {int(weighted)}/100 on Rotten Tomatoes and"+f" {rating_raw}/10 on IMDb."
+            suffix=f" Released in {rt.year_released(corrected)}, the {rt.genres(corrected)[0]} show recieved {int(weighted)}/100 on Rotten Tomatoes and"+f" {rating_raw}/10 on IMDb."
         except:
             failed=1
 
-        avg=(response*50)+weighted
-        avg=avg/2/50
-        if avg>=2:
+        avg=(rating_raw*10)+weighted
+        avg=avg/2
+        if avg>=80:
             robot=random.choice(res2)+suffix
-        elif avg>=1:
+        elif avg>=60:
             robot=random.choice(res1)+suffix
-        elif avg>=0:
+        elif avg> 0:
             robot=random.choice(res0)+suffix
         else: #error handling
             concat=res2+res1+res0

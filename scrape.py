@@ -61,3 +61,4 @@ class Search():
     self.text = data
     try:self.first = self.text[0]['snippet']
     except:self.first=self.text
+    

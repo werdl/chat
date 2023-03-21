@@ -9,3 +9,4 @@ mathparse
 gunicorn
 flask
 wikipedia
+rottentomatoes-python
