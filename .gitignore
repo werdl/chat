@@ -3,3 +3,8 @@ old.py
 test.py
 .vercel
 notes.txt
+throttle.ctrl
+.vercel/*
+.cache/*
+.apicache-py3/*
+chat.tar.gz

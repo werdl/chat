@@ -1,5 +1,5 @@
 from textblob import TextBlob as t
-import sys,random,re,scrape,words,string,requests,json,bs4,lxml
+import sys,random,re,scrape,words,requests,json,bs4,lxml
 from nltk.tokenize import sent_tokenize
 import nltk
 nltk.download('punkt')
@@ -229,7 +229,11 @@ def chat():
     nextrate=False
     while True:
         inp=str(input("😃 -- "))
-        take=user(inp,nexthow,nextrate)
+        try:
+            take=user(inp,nexthow,nextrate)
+            print(take["response"])
+        except:
+            print("🤖 -- An error occured")
         if take['rate_just']==True:
             nextrate=True
         else:
@@ -238,6 +242,5 @@ def chat():
             nexthow=True
         else:
             nexthow=False
-        print(take["response"])
 if "-r" in sys.argv:
     chat()

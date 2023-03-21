@@ -15,31 +15,26 @@ class Search():
     self.code = 200
     self.text = ""
     self.first = ""
-
+    self.params=""
+    self.headers=""
+    self.firstlink=""
   def search(self):
-    params = {
+    self.params = {
       "q": self.query,
       "hl": "en",
       "gl": "uk",
       "start": 0,
     }
-    headers = {
+    self.headers = {
       "User-Agent":
       "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"  # set http headers
     }
     data = []
     html = requests.get("https://www.google.com/search",
-                        params=params,
-                        headers=headers,
+                        params=self.params,
+                        headers=self.headers,
                         timeout=30)  # grab data
     soup = BeautifulSoup(html.text, 'lxml')  # parse data
-    try:
-      if soup.select_one(".hgKElc").text!="":
-        self.text=soup.select_one(".hgKElc").text
-        self.first=self.text
-        return
-    except:
-      pass
     for result in soup.select(".tF2Cxc"):  # search through for useful info
       title = result.select_one(".DKV0Md").text
       try:
@@ -47,7 +42,7 @@ class Search():
         add = True
       except:
         add = False
-      links = result.select_one(".yuRUbf a")["href"]
+      links = result.select_one(".qLRx3b")
       if add != False:
         data.append({
           "title": title,
@@ -58,7 +53,6 @@ class Search():
       self.code = 500  # internal error
     else:
       self.code = 200  # response ok
-    self.text = data
+    self.text = data 
     try:self.first = self.text[0]['snippet']
     except:self.first=self.text
-    
