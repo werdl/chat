@@ -1,8 +1,6 @@
 from textblob import TextBlob as t
 import sys,random,re,scrape,words,requests,json,bs4,lxml
 from nltk.tokenize import sent_tokenize
-import nltk
-nltk.download('punkt')
 def sentiment(inp,take=False): # Take input 
     if take==True:
         inp=str(input("😃 -- "))
@@ -183,6 +181,7 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
             z=z.replace("?",".").replace("!",".")
             if robot==""or robot in greetings:
                 robot=z.split(".")[0].strip()
+                
         else:
             log("else",1)
             from semantic3.units import ConversionService
@@ -198,9 +197,13 @@ def user(inp,how_just=False,rate_just=False,round_value=3):
                     robot=str(round(mathparse.parse(inp),round_value))
                     log("successful maths equation")
                 except:
+                    for greet in greetings:
+                        if greet in corrected:
+                            robot=random.choice(greetings)
                     if robot=="":
                         log("sentiment from else",2)
                         robot=sentiment(inp)
+                    
     return {"response":f"🤖 -- {robot.strip()}",
             "how_just":how_just,
             "rate_just":rate_just}# we return it like this so that the Flask web app can handle it
